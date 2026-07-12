@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>竹影清风 PE · Windows 预安装环境</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #0a0d0b;
+            --bg-1: #0f1411;
+            --bg-2: #141a16;
+            --bg-3: #1a2218;
+            --border: rgba(180, 200, 175, 0.07);
+            --border-h: rgba(126, 184, 140, 0.2);
+            --text: #dfddd7;
+            --text-2: #8b9690;
+            --text-3: #565f5a;
+            --green: #6b9b7a;
+            --green-b: #7eb88c;
+            --green-d: rgba(107, 155, 122, 0.12);
+            --gold: #c49956;
+            --gold-b: #d6ab64;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 9998;
+            pointer-events: none;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.8'/%3E%3C/svg%3E");
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* === Navbar === */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 14px 0;
+            background: rgba(10, 13, 11, 0.72);
+            backdrop-filter: blur(12px) saturate(140%);
+            border-bottom: 1px solid var(--border);
+            transition: padding 0.3s, background 0.3s;
+        }
+        .nav.scrolled {
+            padding: 10px 0;
+            background: rgba(10, 13, 11, 0.92);
+        }
+        .nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .logo i {
+            color: var(--green);
+            font-size: 22px;
+        }
+        .logo .pe {
+            color: var(--text-2);
+            font-weight: 400;
+            font-size: 16px;
+            margin-left: 2px;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            font-size: 14px;
+            color: var(--text-2);
+        }
+        .nav-links a {
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--text);
+        }
+        .btn-nav {
+            background: var(--gold);
+            color: #1a1410 !important;
+            padding: 7px 22px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .btn-nav:hover {
+            background: var(--gold-b);
+            transform: translateY(-1px);
+            color: #1a1410 !important;
+        }
+
+        /* === Hero === */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 100px 0 60px;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: radial-gradient(ellipse at 70% 40%, rgba(107, 155, 122, 0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 48px;
+            align-items: center;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--green-b);
+            padding: 5px 14px;
+            border: 1px solid rgba(107, 155, 122, 0.15);
+            border-radius: 4px;
+            margin-bottom: 24px;
+            background: var(--green-d);
+        }
+        .hero-badge i {
+            font-size: 11px;
+        }
+        .hero-title {
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-size: 52px;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+        .hero-title .accent {
+            color: var(--green-b);
+        }
+        .hero-sub {
+            font-size: 17px;
+            color: var(--text-2);
+            max-width: 480px;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+        .hero-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .btn-gold {
+            background: var(--gold);
+            color: #1a1410;
+            padding: 12px 36px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-gold:hover {
+            background: var(--gold-b);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(196, 153, 86, 0.2);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 11px 32px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover {
+            border-color: var(--border-h);
+            background: rgba(126, 184, 140, 0.04);
+        }
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+        .stat .num {
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .stat .lbl {
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        /* === Hero PE Window === */
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+        }
+        .pe-window {
+            width: 100%;
+            max-width: 420px;
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .pe-window:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+        }
+        .win-bar {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--bg-2);
+            border-bottom: 1px solid var(--border);
+        }
+        .win-dots {
+            display: flex;
+            gap: 6px;
+            margin-right: 14px;
+        }
+        .win-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--text-3);
+            opacity: 0.4;
+        }
+        .win-title {
+            font-size: 12px;
+            color: var(--text-2);
+        }
+        .win-desktop {
+            position: relative;
+            background: #0a0d0b;
+            line-height: 0;
+        }
+        .win-desktop img {
+            width: 100%;
+            display: block;
+        }
+
+        /* === Section common === */
+        .section {
+            padding: 90px 0;
+        }
+        .section-label {
+            font-size: 13px;
+            color: var(--green);
+            font-weight: 500;
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 28px;
+            display: inline-block;
+        }
+        .section-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 18px;
+            height: 1px;
+            background: var(--green);
+        }
+        .section-title {
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .section-desc {
+            font-size: 16px;
+            color: var(--text-2);
+            max-width: 560px;
+        }
+        .section-header {
+            margin-bottom: 48px;
+        }
+        .section-header.center {
+            text-align: center;
+        }
+        .section-header.center .section-label {
+            padding-left: 0;
+        }
+        .section-header.center .section-label::before {
+            display: none;
+        }
+        .section-header.center .section-desc {
+            margin: 0 auto;
+        }
+
+        /* === Features === */
+        .features {
+            background: var(--bg-1);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--border);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .feat-card {
+            background: var(--bg-1);
+            padding: 32px 28px;
+            transition: background 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .feat-card:hover {
+            background: var(--bg-2);
+        }
+        .feat-card .feat-num {
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-size: 14px;
+            color: var(--text-3);
+            margin-bottom: 12px;
+        }
+        .feat-card .feat-img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 14px;
+            display: block;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid var(--border);
+            background: var(--bg-2);
+        }
+        .feat-card .feat-img:hover {
+            transform: scale(1.02);
+        }
+        .feat-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .feat-card h3 i {
+            color: var(--green);
+            font-size: 18px;
+        }
+        .feat-card p {
+            color: var(--text-2);
+            font-size: 14px;
+            line-height: 1.7;
+            flex: 1;
+        }
+
+        /* === Modal for image zoom === */
+        .img-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .img-modal.active {
+            display: flex;
+        }
+        .img-modal img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            cursor: default;
+        }
+        .img-modal .close-btn {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 32px;
+            color: var(--text);
+            opacity: 0.7;
+            transition: opacity 0.2s;
+            cursor: pointer;
+            font-weight: 300;
+        }
+        .img-modal .close-btn:hover {
+            opacity: 1;
+        }
+
+        /* === Divider === */
+        .divider {
+            position: relative;
+            text-align: center;
+            padding: 32px 0;
+            background: var(--bg);
+        }
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: var(--border);
+        }
+        .divider span {
+            position: relative;
+            z-index: 2;
+            background: var(--bg);
+            padding: 0 24px;
+            font-size: 13px;
+            color: var(--text-3);
+        }
+
+        /* === Core features === */
+        .core {
+            background: var(--bg);
+        }
+        .core-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+        }
+        .core-item {
+            padding: 28px 32px 28px 0;
+            border-right: 1px solid var(--border);
+        }
+        .core-item:nth-child(2n) {
+            padding-left: 32px;
+            padding-right: 0;
+            border-right: none;
+        }
+        .core-item:nth-child(3),
+        .core-item:nth-child(4) {
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+        .core-item:nth-child(4) {
+            padding-top: 28px;
+        }
+        .core-item h4 {
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .core-item h4 i {
+            color: var(--green);
+            font-size: 18px;
+        }
+        .core-item p {
+            color: var(--text-2);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* === Products & Download (merged) === */
+        .products {
+            background: var(--bg-1);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            scroll-margin-top: 80px;
+        }
+        .product-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        .product-card {
+            background: var(--bg-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 36px 32px 32px;
+            transition: border-color 0.3s, transform 0.3s;
+            position: relative;
+        }
+        .product-card:hover {
+            border-color: var(--border-h);
+            transform: translateY(-3px);
+        }
+        .product-card .pc-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 11px;
+            color: var(--green-b);
+            padding: 3px 10px;
+            border: 1px solid rgba(107, 155, 122, 0.15);
+            border-radius: 4px;
+            background: var(--green-d);
+        }
+        .product-card.gold .pc-badge {
+            color: var(--gold-b);
+            border-color: rgba(196, 153, 86, 0.2);
+            background: rgba(196, 153, 86, 0.06);
+        }
+        .product-card .pc-icon {
+            font-size: 28px;
+            color: var(--green);
+            margin-bottom: 14px;
+            display: block;
+        }
+        .product-card.gold .pc-icon {
+            color: var(--gold);
+        }
+        .product-card h3 {
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .product-card .pc-sub {
+            color: var(--text-2);
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+        .product-card ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        .product-card ul li {
+            padding: 6px 0;
+            font-size: 14px;
+            color: var(--text-2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        .product-card ul li:last-child {
+            border-bottom: none;
+        }
+        .product-card ul li i {
+            color: var(--green);
+            font-size: 12px;
+            width: 16px;
+        }
+        .product-card.gold ul li i {
+            color: var(--gold);
+        }
+        .product-card .pc-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: var(--text-3);
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+        .product-card .pc-meta i {
+            color: var(--green);
+            margin-right: 5px;
+        }
+        .product-card.gold .pc-meta i {
+            color: var(--gold);
+        }
+        .product-card .pc-price {
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .product-card .pc-price small {
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--text-3);
+        }
+        .btn-pc {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 14px;
+            padding: 11px 32px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+            background: var(--gold);
+            color: #1a1410;
+        }
+        .btn-pc:hover {
+            background: var(--gold-b);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(196, 153, 86, 0.2);
+        }
+        .product-card.gold .btn-pc {
+            background: var(--gold);
+            color: #1a1410;
+        }
+        .product-card.gold .btn-pc:hover {
+            background: var(--gold-b);
+        }
+
+        /* === Footer === */
+        .footer {
+            background: var(--bg-1);
+            border-top: 1px solid var(--border);
+            padding: 36px 0 28px;
+        }
+        .footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Noto Serif SC', 'Songti SC', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .footer-brand i {
+            color: var(--green);
+        }
+        .footer-copy {
+            color: var(--text-3);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+        .footer-links a {
+            color: var(--text-3);
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--text-2);
+        }
+
+        /* === Reveal animation === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* === Responsive === */
+        @media (max-width: 1024px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .hero-visual {
+                order: -1;
+            }
+            .hero-title {
+                font-size: 40px;
+            }
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .core-grid {
+                grid-template-columns: 1fr;
+            }
+            .core-item {
+                border-right: none;
+                padding-right: 0;
+            }
+            .core-item:nth-child(2n) {
+                padding-left: 0;
+            }
+            .core-item:nth-child(3),
+            .core-item:nth-child(4) {
+                border-top: 1px solid var(--border);
+            }
+            .product-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav .container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px;
+                font-size: 13px;
+            }
+            .hero-title {
+                font-size: 32px;
+            }
+            .hero-sub {
+                font-size: 16px;
+            }
+            .hero-stats {
+                gap: 24px;
+                flex-wrap: wrap;
+            }
+            .section {
+                padding: 60px 0;
+            }
+            .section-title {
+                font-size: 26px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="nav" id="nav">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-feather-alt"></i>
+                竹影清风<span class="pe">PE</span>
+            </div>
+            <div class="nav-links">
+                <a href="#">首页</a>
+                <a href="#features">特点</a>
+                <a href="#core">核心</a>
+                <a href="#products" class="btn-nav"><i class="fas fa-download"></i> 产品与下载</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-bolt"></i> 全新 25H2 内核 · 兼容 03PE
+                </div>
+                <h1 class="hero-title">
+                    重定义<br/>
+                    <span class="accent">Windows</span> 预安装环境
+                </h1>
+                <p class="hero-sub">
+                    完全自主开发的竹影清风系统安装工具，在线下载安装纯净 Windows。新手也能一键装系统，超快启动，颜值在线。
+                </p>
+                <div class="hero-actions">
+                    <a href="#products" class="btn-gold"><i class="fas fa-download"></i> 立即下载 PE</a>
+                    <a href="#features" class="btn-outline">探索特点 <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="num">25H2</div>
+                        <div class="lbl">最新内核</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num">03PE</div>
+                        <div class="lbl">老机兼容</div>
+                    </div>
+                    <div class="stat">
+                        <div class="num">0</div>
+                        <div class="lbl">无捆绑·纯净</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="pe-window">
+                    <div class="win-bar">
+                        <div class="win-dots"><span></span><span></span><span></span></div>
+                        <div class="win-title">竹影清风 PE 3.5 — 桌面</div>
+                    </div>
+                    <div class="win-desktop">
+                        <img src="image/zywpe.jpg" alt="竹影清风 PE 桌面截图" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section features" id="features">
+        <div class="container">
+            <div class="section-header center reveal">
+                <div class="section-label">核心优势</div>
+                <h2 class="section-title">竹影清风 · 六大特点</h2>
+                <p class="section-desc">完全自主开发，纯净无捆绑，新手也能一键装系统</p>
+            </div>
+            <div class="features-grid reveal">
+                <!-- 特点 1 -->
+                <div class="feat-card">
+                    <div class="feat-num">01</div>
+                    <img class="feat-img" src="image/1.jpg" alt="全自主开发 · 在线安装" />
+                    <h3><i class="fas fa-code-branch"></i> 全自主开发 · 在线安装</h3>
+                    <p>拥有完全自主开发的竹影清风系统安装工具，支持在线下载安装纯净 Windows 系统，无需额外准备镜像。</p>
+                </div>
+                <!-- 特点 2 -->
+                <div class="feat-card">
+                    <div class="feat-num">02</div>
+                    <img class="feat-img" src="image/2.jpg" alt="双内核 · 极致兼容" />
+                    <h3><i class="fas fa-microchip"></i> 双内核 · 极致兼容</h3>
+                    <p>搭载最新版 25H2 内核，同时集成针对老机器优化的 03PE 内核，新老设备通吃，强大兼容性。</p>
+                </div>
+                <!-- 特点 3 -->
+                <div class="feat-card">
+                    <div class="feat-num">03</div>
+                    <img class="feat-img" src="image/3.jpg" alt="超多工具 · 精心整理" />
+                    <h3><i class="fas fa-toolbox"></i> 超多工具 · 精心整理</h3>
+                    <p>内置海量实用维护工具，覆盖分区、备份、修复、密码重置等场景，满足日常维护所有需要。</p>
+                </div>
+                <!-- 特点 4 -->
+                <div class="feat-card">
+                    <div class="feat-num">04</div>
+                    <img class="feat-img" src="image/4.jpg" alt="超高颜值 · 极速启动" />
+                    <h3><i class="fas fa-bolt"></i> 超高颜值 · 极速启动</h3>
+                    <p>现代视觉设计，操作界面赏心悦目；底层深度优化，启动速度远超同类工具，效率倍增。</p>
+                </div>
+                <!-- 特点 5 -->
+                <div class="feat-card">
+                    <div class="feat-num">05</div>
+                    <img class="feat-img" src="image/5.jpg" alt="纯净无捆绑 · 无人值守" />
+                    <h3><i class="fas fa-shield-alt"></i> 纯净无捆绑 · 无人值守</h3>
+                    <p>PE 纯净无任何推广捆绑，系统安装工具支持无人值守模式，体系完整，新手也能一键完成系统安装。</p>
+                </div>
+                <!-- 特点 6 -->
+                <div class="feat-card">
+                    <div class="feat-num">06</div>
+                    <img class="feat-img" src="image/6.jpg" alt="新启年工作室 · 专业支持" />
+                    <h3><i class="fas fa-headset"></i> 新启年工作室 · 专业支持</h3>
+                    <p>拥有新启年工作室的专业技术支持，长期维护更新，为你提供稳定可靠的使用保障与持续优化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="divider">
+        <span>基于原版 Windows 内核 · 自研 PE 环境</span>
+    </div>
+
+    <!-- Core features -->
+    <section class="section core" id="core">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">底层实力</div>
+                <h2 class="section-title">产品核心特点</h2>
+                <p class="section-desc">基于原版 Windows 内核打造，自研 PE 环境，让系统安装更简单、更稳定</p>
+            </div>
+            <div class="core-grid reveal">
+                <div class="core-item">
+                    <h4><i class="fab fa-windows"></i> 系统原版核心</h4>
+                    <p>基于原版 Windows 核心制作 PE，稳定性高、兼容性强，使用 Windows 默认分区方式对 U 盘进行分区，稳定不掉速。</p>
+                </div>
+                <div class="core-item">
+                    <h4><i class="fas fa-laptop-code"></i> 自研 PE 环境</h4>
+                    <p>内建全自研的 PE 环境，结合大量实践经验，操作直观、使用便捷，同时提供完备的硬件信息桌面显示，一目了然。</p>
+                </div>
+                <div class="core-item">
+                    <h4><i class="fas fa-desktop"></i> 装系统直达桌面</h4>
+                    <p>结合全自研的系统安装工具，硬盘分区、Windows 系统安装一站式完成，支持无人值守模式，新手也能一键装系统。</p>
+                </div>
+                <div class="core-item">
+                    <h4><i class="fas fa-sync-alt"></i> 体系化系统安装</h4>
+                    <p>结合驱动、运行库、系统封装等其他自研软件，对系统安装达成体系化支持，充分发挥 PE 功能。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products & Download (merged) -->
+    <section class="section products" id="products">
+        <div class="container">
+            <div class="section-header center reveal">
+                <div class="section-label">产品与下载</div>
+                <h2 class="section-title">选择你的工具</h2>
+                <p class="section-desc">竹影清风 PE 3.5 · 竹影清风系统安装 1.0 · 同等强大，不同侧重</p>
+            </div>
+            <div class="product-cards reveal">
+                <!-- PE 3.5 -->
+                <div class="product-card">
+                    <span class="pc-badge">最新版</span>
+                    <span class="pc-icon"><i class="fas fa-feather-alt"></i></span>
+                    <h3>竹影清风 PE 3.5</h3>
+                    <div class="pc-sub">全新 25H2 内核 · 兼容 03PE · 超快启动</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 最新 25H2 内核 + 03PE 双核</li>
+                        <li><i class="fas fa-check"></i> 全自研 PE 环境 · 高颜值界面</li>
+                        <li><i class="fas fa-check"></i> 超多维护工具 · 精心整理</li>
+                        <li><i class="fas fa-check"></i> 硬件信息桌面显示 · 一目了然</li>
+                        <li><i class="fas fa-check"></i> 0 捆绑 · 纯净体验</li>
+                    </ul>
+                    <div class="pc-meta">
+                        <span><i class="fas fa-tag"></i> v3.5.0</span>
+                        <span><i class="fas fa-calendar-alt"></i> 2026.07.06</span>
+                        <span><i class="fas fa-file-archive"></i> 约 680 MB</span>
+                        <span><i class="fas fa-check-circle"></i> 纯净无捆绑</span>
+                    </div>
+                    <div class="pc-price">免费 <small>· 稳定版</small></div>
+                    <a href="https://www.123865.com/s/rcsyVv-i6Pxh?pwd=zyqf#" class="btn-pc"><i class="fas fa-download"></i> 下载 PE 3.5</a>
+                </div>
+
+                <!-- 系统安装 1.0 -->
+                <div class="product-card gold">
+                    <span class="pc-badge">全新发布</span>
+                    <span class="pc-icon"><i class="fas fa-cog"></i></span>
+                    <h3>竹影清风系统安装 1.0</h3>
+                    <div class="pc-sub">一站式 Windows 安装 · 无人值守 · 新手友好</div>
+                    <ul>
+                        <li><i class="fas fa-check"></i> 完全自主开发 · 在线下载安装</li>
+                        <li><i class="fas fa-check"></i> 支持无人值守模式 · 全自动</li>
+                        <li><i class="fas fa-check"></i> 分区 · 安装 · 驱动 · 一站式完成</li>
+                        <li><i class="fas fa-check"></i> 体系完整 · 新手也能一键装系统</li>
+                        <li><i class="fas fa-check"></i> 纯净无捆绑 · 无任何推广</li>
+                    </ul>
+                    <div class="pc-meta">
+                        <span><i class="fas fa-tag"></i> v1.0.0</span>
+                        <span><i class="fas fa-calendar-alt"></i> 2026.07.06</span>
+                        <span><i class="fas fa-file-archive"></i> 约 420 MB</span>
+                        <span><i class="fas fa-check-circle"></i> 纯净无捆绑</span>
+                    </div>
+                    <div class="pc-price">免费 <small>· 完整体验</small></div>
+                    <a href="https://1816900491.share.123pan.cn/123pan/rcsyVv-fGxah?pwd=zyqf#" class="btn-pc"><i class="fas fa-download"></i> 下载安装 1.0</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div>
+                <div class="footer-brand">
+                    <i class="fas fa-feather-alt"></i> 竹影清风 PE
+                </div>
+                <div class="footer-copy">© 2026 新启年工作室 · 纯净系统安装倡导者</div>
+            </div>
+            <div class="footer-links">
+                <a href="#">关于</a>
+                <a href="#">帮助</a>
+                <a href="#">隐私</a>
+                <a href="#">反馈</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Modal (Zoom) -->
+    <div class="img-modal" id="imgModal">
+        <span class="close-btn" id="modalClose">&times;</span>
+        <img id="modalImg" src="" alt="放大预览" />
+    </div>
+
+    <script>
+        // Navbar scroll
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 40) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+
+        // Smooth scroll with offset
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const target = document.querySelector(targetId);
+                if (target) {
+                    e.preventDefault();
+                    const navHeight = nav.offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 12;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ---------- Image zoom modal ----------
+        const modal = document.getElementById('imgModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeBtn = document.getElementById('modalClose');
+
+        document.querySelectorAll('.feat-img').forEach(img => {
+            img.addEventListener('click', function(e) {
+                e.stopPropagation();
+                modalImg.src = this.src;
+                modalImg.alt = this.alt || '放大预览';
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    </script>
+
+</body>
+</html>
